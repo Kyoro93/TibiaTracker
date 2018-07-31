@@ -6,18 +6,18 @@ class ControllerSearchInfoChar implements Runnable {
 
 	ControllerSearchInfoChar(String strCharName) {
 		this.strCharName = strCharName;
-		System.out.println("Creating: " + strCharName);
+		//System.out.println("Creating: " + strCharName);
 	}
 
 	public void run() {
-		System.out.println("Running " + strCharName);
+		//System.out.println("Running " + strCharName);
 		GetInfos gi = new GetInfos();
 		System.out.println(gi.getFullCharacterInfo(strCharName));
-		System.out.println("Thread " + strCharName + " exiting.");
+		//System.out.println("Thread " + strCharName + " exiting.");
 	}
 
 	public void start() {
-		System.out.println("Starting " + strCharName);
+		//System.out.println("Starting " + strCharName);
 		if (t == null) {
 			t = new Thread(this, strCharName);
 			t.start();
