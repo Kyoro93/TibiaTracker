@@ -174,8 +174,7 @@ public class GetInfos {
 				Matcher mMarriedTo = rMarriedTo.matcher(content);
 
 				while (mMarriedTo.find()) {
-					System.out.println(mMarriedTo.group(0));
-					strMarriedTo = mMarriedTo.group(0).split("\">")[1].split("</a>")[0].replace("&#160;", " ").trim();
+					strMarriedTo = mMarriedTo.group(0).split("&name=")[1].split("\">")[0].replace("+", " ").trim();
 				}
 
 				Map<String, String> mapInformations = new HashMap<String, String>();
@@ -303,7 +302,7 @@ public class GetInfos {
 			
 			ArrayList<String> players = new ArrayList<String>();
 
-			String pattern = "&name=[\\w\\s]*";
+			String pattern = "&name=[\\w\\s+]*";
 			Pattern r = Pattern.compile(pattern);
 			Matcher m = r.matcher(content);
 

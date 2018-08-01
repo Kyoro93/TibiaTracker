@@ -1,10 +1,10 @@
 package core;
 
-class ControllerSearchInfoChar implements Runnable {
+class ThreadSearchInfoChar implements Runnable {
 	private Thread t;
 	private String strCharName;
 
-	ControllerSearchInfoChar(String strCharName) {
+	ThreadSearchInfoChar(String strCharName) {
 		this.strCharName = strCharName;
 		//System.out.println("Creating: " + strCharName);
 	}
@@ -12,7 +12,7 @@ class ControllerSearchInfoChar implements Runnable {
 	public void run() {
 		//System.out.println("Running " + strCharName);
 		GetInfos gi = new GetInfos();
-		System.out.println(gi.getFullCharacterInfo(strCharName));
+		System.out.println(strCharName+": "+gi.getFullCharacterInfo(strCharName));
 		//System.out.println("Thread " + strCharName + " exiting.");
 	}
 
