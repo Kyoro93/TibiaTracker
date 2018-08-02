@@ -1,8 +1,5 @@
 package core;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,29 +13,8 @@ public class GetInfos {
 		try {
 			URL url = new URL(
 					"https://secure.tibia.com/community/?subtopic=characters&name=" + strCharName.replace(" ", "+"));
-			int responseCode = 0;
-			String content = "";
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestProperty("User-Agent",
-					"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-			while (responseCode != 200) {
-				responseCode = conn.getResponseCode();
-
-				if (responseCode == 200) {
-					// open the stream and put it into BufferedReader
-					BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "ISO-8859-1"));
-
-					String inputLine;
-
-					while ((inputLine = br.readLine()) != null) {
-						content += inputLine;
-					}
-					br.close();
-					conn.disconnect();
-					conn = null;
-				}
-			}
-
+			
+			String content = DinstinctFunctions.getWebsiteContent(url);
 
 			if (content.contains("does not exist.")) {
 				// TODO
@@ -232,30 +208,9 @@ public class GetInfos {
 	public ArrayList<String> getWorldsName() {
 		try {
 			URL url = new URL("https://secure.tibia.com/community/?subtopic=worlds");
-			int responseCode = 0;
-			String content = "";
-			while (responseCode != 200) {
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setRequestProperty("User-Agent",
-						"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-				responseCode = conn.getResponseCode();
 
-				if (responseCode == 200) {
-					// open the stream and put it into BufferedReader
-					BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "ISO-8859-1"));
+			String content = DinstinctFunctions.getWebsiteContent(url);
 
-					String inputLine;
-
-					while ((inputLine = br.readLine()) != null) {
-						content += inputLine;
-					}
-					br.close();
-				}
-
-				conn.disconnect();
-				conn = null;
-			}
-			
 			ArrayList<String> worlds = new ArrayList<String>();
 
 			String pattern = "world=[\\w]*";
@@ -272,34 +227,13 @@ public class GetInfos {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<String> getPlayersByWorld(String strWorldName) {
 		try {
-			URL url = new URL("https://secure.tibia.com/community/?subtopic=worlds&world="+strWorldName);
-			int responseCode = 0;
-			String content = "";
-			while (responseCode != 200) {
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setRequestProperty("User-Agent",
-						"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-				responseCode = conn.getResponseCode();
+			URL url = new URL("https://secure.tibia.com/community/?subtopic=worlds&world=" + strWorldName);
 
-				if (responseCode == 200) {
-					// open the stream and put it into BufferedReader
-					BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "ISO-8859-1"));
+			String content = DinstinctFunctions.getWebsiteContent(url);
 
-					String inputLine;
-
-					while ((inputLine = br.readLine()) != null) {
-						content += inputLine;
-					}
-					br.close();
-				}
-
-				conn.disconnect();
-				conn = null;
-			}
-			
 			ArrayList<String> players = new ArrayList<String>();
 
 			String pattern = "&name=[\\w\\s+]*";
