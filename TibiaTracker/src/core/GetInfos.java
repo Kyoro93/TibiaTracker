@@ -18,10 +18,10 @@ public class GetInfos {
 					"https://secure.tibia.com/community/?subtopic=characters&name=" + strCharName.replace(" ", "+"));
 			int responseCode = 0;
 			String content = "";
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 			while (responseCode != 200) {
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setRequestProperty("User-Agent",
-						"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 				responseCode = conn.getResponseCode();
 
 				if (responseCode == 200) {
@@ -34,11 +34,11 @@ public class GetInfos {
 						content += inputLine;
 					}
 					br.close();
+					conn.disconnect();
+					conn = null;
 				}
-
-				conn.disconnect();
-				conn = null;
 			}
+
 
 			if (content.contains("does not exist.")) {
 				// TODO
@@ -131,7 +131,7 @@ public class GetInfos {
 				}
 
 				// HOUSE
-				String patternHouse = "<td>House:</td><td>[\\s]*[<][\\w\\s]*[=\"]*[\\w:/.?=&;+\"\\s]*[>][\\w\\s]*[</a>\\s]*[(\\w)]*";
+				String patternHouse = "<td>House:</td><td>[\\s]*[<][\\w\\s]*[=\"]*[\\w:/.?=&;+\"\\s]*[>][\\w\\s]*[</a>\\s]*[(\\w\\s]*[)]*";
 				Pattern rHouse = Pattern.compile(patternHouse);
 				Matcher mHouse = rHouse.matcher(content);
 

@@ -1,6 +1,5 @@
 package core;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -10,7 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 		long startTime = System.nanoTime();
 
-		ExecutorService executor = Executors.newFixedThreadPool(6);
+		ExecutorService executor = Executors.newFixedThreadPool(3);
 		ArrayList<String> players = new ArrayList<String>();
 		ArrayList<String> worlds = new ArrayList<String>();
 		GetInfos gi = new GetInfos();
@@ -20,6 +19,9 @@ public class Main {
 			players.addAll(gi.getPlayersByWorld(w));
 			System.out.println(players.size());
 		}
+		
+		players.sort(String::compareToIgnoreCase);
+		
 		for (String p : players) {
 			Runnable worker = new ThreadSearchInfoChar(p);
 			executor.execute(worker);

@@ -1,10 +1,8 @@
 package core;
 
-import java.io.IOException;
-
 class ThreadSearchInfoChar implements Runnable {
 	private Thread t;
-	private String strCharName;
+	private final String strCharName;
 
 	ThreadSearchInfoChar(String strCharName) {
 		this.strCharName = strCharName;
