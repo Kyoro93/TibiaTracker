@@ -15,9 +15,11 @@ public class Main {
 		GetInfos gi = new GetInfos();
 
 		worlds = gi.getWorldsName();
+		int total = worlds.size();
+		int i = 0;
 		for (String w : worlds) {
 			players.addAll(gi.getPlayersByWorld(w));
-			System.out.println(players.size());
+			System.out.println(++i+"/"+total+": "+players.size());
 		}
 		
 		players.sort(String::compareToIgnoreCase);
