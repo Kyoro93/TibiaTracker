@@ -18,8 +18,9 @@ public class Main {
 		int total = worlds.size();
 		int i = 0;
 		for (String w : worlds) {
-			players.addAll(gi.getPlayersByWorld(w));
-			System.out.println(++i+"/"+total+": "+players.size());
+			ArrayList<String> j = gi.getPlayersByWorld(w);
+			players.addAll(j);
+			System.out.println(w+": "+ ++i +"/"+total+" - "+(players.size()-j.size())+"+"+j.size()+" = "+players.size());
 		}
 		
 		players.sort(String::compareToIgnoreCase);
